@@ -13,7 +13,8 @@
       "@myprojectname/*": [
         "libs/*"
       ]
-    }
+    },
+    "noUnusedLocals": true
   },
   "include": [
     "**/*.ts"

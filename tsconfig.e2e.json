@@ -14,7 +14,8 @@
       "@myprojectname/*": [
         "libs/*"
       ]
-    }
+    },
+    "noUnusedLocals": true
   },
   "exclude": [
     "**/*.spec.ts",
