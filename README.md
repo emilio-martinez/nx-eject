@@ -1,10 +1,10 @@
-# Myprojectname
+# Angular Tour of Heroes—([Eject](https://github.com/angular/angular-cli/wiki/eject) + [Nx](https://nrwl.io/nx))
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.5.0 using [Nrwl Nx](https://nrwl.io/nx).
+ This project implements the original [Tour of Heroes](https://angular.io/tutorial) tutorial but showcasing the use of [Nx](https://nrwl.io/nx). Additionally, this project will progressively move towards a viable [Angular CLI Eject](https://github.com/angular/angular-cli/wiki/eject) strategy.
+
+ ---
 
 ## Nrwl Extensions for Angular (Nx)
-
-<a href="https://nrwl.io/nx"><img src="https://preview.ibb.co/mW6sdw/nx_logo.png"></a>
 
 Nx is an open source toolkit for enterprise Angular applications.
 
