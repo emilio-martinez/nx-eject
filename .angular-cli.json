@@ -1,8 +1,9 @@
 {
-  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "$schema": "./node_modules/@nrwl/schematics/src/schema.json",
   "project": {
     "name": "myprojectname",
-    "npmScope": "myprojectname"
+    "npmScope": "myprojectname",
+    "latestMigration": "0.2.2"
   },
   "apps": [
     {
@@ -74,12 +75,9 @@
     "schematics": {
       "collection": "@nrwl/schematics",
       "postGenerate": "npm run format",
-      "newProject": [
-        "app",
-        "lib"
-      ]
+      "newProject": ["app", "lib"]
     },
-    "styleExt": "css",
+    "styleExt": "scss",
     "component": {}
   }
 }
