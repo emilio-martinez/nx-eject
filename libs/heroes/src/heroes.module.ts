@@ -21,6 +21,7 @@ import { HeroService } from './hero.service';
 export class HeroesModule {
   static withMockData(): ModuleWithProviders {
     return {
+      // tslint:disable-next-line no-use-before-declare
       ngModule: HeroesMockModule,
       providers: []
     };

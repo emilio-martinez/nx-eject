@@ -1,8 +1,9 @@
 {
-  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "$schema": "./node_modules/@nrwl/schematics/src/schema.json",
   "project": {
     "name": "myprojectname",
-    "npmScope": "myprojectname"
+    "npmScope": "myprojectname",
+    "latestMigration": "20180227-cleanup-scripts"
   },
   "apps": [
     {
@@ -17,7 +18,7 @@
       "main": "main.ts",
       "polyfills": "polyfills.ts",
       "test": "../../../test.js",
-      "tsconfig": "../../../tsconfig.app.json",
+      "tsconfig": "tsconfig.app.json",
       "testTsconfig": "../../../tsconfig.spec.json",
       "prefix": "app",
       "styles": [
@@ -43,9 +44,8 @@
       "appRoot": ""
     },
     {
-      "name": "qwertyzzz",
-      "root": "libs/qwertyzzz/src",
-      "test": "../../../test.js",
+      "name": "$workspaceRoot",
+      "root": ".",
       "appRoot": ""
     }
   ],
@@ -56,13 +56,16 @@
   },
   "lint": [
     {
-      "project": "./tsconfig.app.json"
+      "project": "./tsconfig.spec.json",
+      "exclude": "**/node_modules/**"
     },
     {
-      "project": "./tsconfig.spec.json"
+      "project": "./apps/tour-of-heroes/src/tsconfig.app.json",
+      "exclude": "**/node_modules/**"
     },
     {
-      "project": "./tsconfig.e2e.json"
+      "project": "./apps/tour-of-heroes/e2e/tsconfig.e2e.json",
+      "exclude": "**/node_modules/**"
     }
   ],
   "test": {
