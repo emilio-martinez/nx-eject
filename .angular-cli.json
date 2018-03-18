@@ -3,7 +3,7 @@
   "project": {
     "name": "myprojectname",
     "npmScope": "myprojectname",
-    "latestMigration": "20180227-cleanup-scripts"
+    "latestMigration": "20180313-add-tags"
   },
   "apps": [
     {
@@ -29,24 +29,28 @@
       "environments": {
         "dev": "environments/environment.ts",
         "prod": "environments/environment.prod.ts"
-      }
+      },
+      "tags": []
     },
     {
       "name": "heroes",
       "root": "libs/heroes/src",
       "test": "../../../test.js",
-      "appRoot": ""
+      "appRoot": "",
+      "tags": []
     },
     {
       "name": "messages",
       "root": "libs/messages/src",
       "test": "../../../test.js",
-      "appRoot": ""
+      "appRoot": "",
+      "tags": []
     },
     {
       "name": "$workspaceRoot",
       "root": ".",
-      "appRoot": ""
+      "appRoot": "",
+      "tags": []
     }
   ],
   "e2e": {
