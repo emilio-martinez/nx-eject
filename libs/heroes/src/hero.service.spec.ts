@@ -18,13 +18,16 @@ describe('HeroService', () => {
     });
   });
 
-  beforeEach(inject([HeroService, MessageService, HttpTestingController],
-    (heroSvc: HeroService, messageSvc: MessageService, httpTestingCtrl: HttpTestingController) => {
-      heroService = heroSvc;
-      messageService = messageSvc;
-      httpMock = httpTestingCtrl;
-    }
-  ));
+  beforeEach(
+    inject(
+      [HeroService, MessageService, HttpTestingController],
+      (heroSvc: HeroService, messageSvc: MessageService, httpTestingCtrl: HttpTestingController) => {
+        heroService = heroSvc;
+        messageService = messageSvc;
+        httpMock = httpTestingCtrl;
+      }
+    )
+  );
 
   afterEach(() => {
     httpMock.verify();
@@ -48,10 +51,7 @@ describe('HeroService', () => {
 
     it('should return observable with hero array', () => {
       const term = 'Mr.';
-      const mockUsers: Hero[] = [
-        { id: 0, name: 'Mr. Incredible' },
-        { id: 1, name: 'Mr. Potato Head' }
-      ];
+      const mockUsers: Hero[] = [{ id: 0, name: 'Mr. Incredible' }, { id: 1, name: 'Mr. Potato Head' }];
 
       heroService.searchHeroes(term).subscribe(res => {
         expect(res.length).toBe(2);
@@ -77,6 +77,5 @@ describe('HeroService', () => {
       expect(req.request.method).toBe('GET');
       req.flush(null, { status: 400, statusText: 'Error' });
     });
-
   });
 });
