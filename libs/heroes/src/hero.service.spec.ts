@@ -36,7 +36,7 @@ describe('HeroService', () => {
 
   describe('getHeroes', () => {
     it('should return observable with hero array', () => {
-      const mockUsers: Hero[] = [{ id: 0, name: 'Mr. Incredible' }, { id: 1, name: 'Mr. Potato Head' }];
+      const mockHeroes: Hero[] = [{ id: 0, name: 'Mr. Incredible' }, { id: 1, name: 'Mr. Potato Head' }];
 
       heroService.getHeroes().subscribe(res => {
         expect(res.length).toBe(2);
@@ -46,7 +46,7 @@ describe('HeroService', () => {
 
       const req = httpMock.expectOne(apiUrl);
       expect(req.request.method).toBe('GET');
-      req.flush(mockUsers);
+      req.flush(mockHeroes);
     });
 
     it('should return empty when requests errors', () => {
@@ -57,6 +57,50 @@ describe('HeroService', () => {
       });
 
       const req = httpMock.expectOne(apiUrl);
+      expect(req.request.method).toBe('GET');
+      req.flush(null, { status: 400, statusText: 'Error' });
+    });
+  });
+
+  describe('getHeroNo404', () => {
+    const mockId = 999;
+    const endpoint = (id: number) => `${apiUrl}/?id=${id}`;
+
+    it('should return undefined when no id is found', () => {
+      heroService.getHeroNo404(mockId).subscribe(res => {
+        expect(res).toEqual(undefined);
+        expect(messageService.messages.length).toBe(1);
+        expect(messageService.messages[0].includes(`did not find hero id=${mockId}`)).toBeTruthy();
+      });
+
+      const req = httpMock.expectOne(endpoint(mockId));
+      expect(req.request.method).toBe('GET');
+      req.flush([]);
+    });
+
+    it('should return a single hero for a matching id', () => {
+      const mockHeroes: Hero[] = [{ id: mockId, name: 'Mr. Incredible' }, { id: mockId, name: 'Mr. Potato Head' }];
+
+      heroService.getHeroNo404(mockId).subscribe(res => {
+        expect(typeof res).toBe('object');
+        expect(res).toEqual(mockHeroes[0]);
+        expect(messageService.messages.length).toBe(1);
+        expect(messageService.messages[0].includes(`fetched hero id=${mockId}`)).toBeTruthy();
+      });
+
+      const req = httpMock.expectOne(endpoint(mockId));
+      expect(req.request.method).toBe('GET');
+      req.flush(mockHeroes);
+    });
+
+    it('should return undefined when requests errors', () => {
+      heroService.getHeroNo404(mockId).subscribe(res => {
+        expect(res).toBe(undefined);
+        expect(messageService.messages.length).toBe(1);
+        expect(messageService.messages[0].includes(`getHero id=${mockId} failed`)).toBeTruthy();
+      });
+
+      const req = httpMock.expectOne(endpoint(mockId));
       expect(req.request.method).toBe('GET');
       req.flush(null, { status: 400, statusText: 'Error' });
     });
@@ -76,7 +120,7 @@ describe('HeroService', () => {
 
     it('should return observable with hero array', () => {
       const term = 'Mr.';
-      const mockUsers: Hero[] = [{ id: 0, name: 'Mr. Incredible' }, { id: 1, name: 'Mr. Potato Head' }];
+      const mockHeroes: Hero[] = [{ id: 0, name: 'Mr. Incredible' }, { id: 1, name: 'Mr. Potato Head' }];
 
       heroService.searchHeroes(term).subscribe(res => {
         expect(res.length).toBe(2);
@@ -86,7 +130,7 @@ describe('HeroService', () => {
 
       const req = httpMock.expectOne(endpoint(term));
       expect(req.request.method).toBe('GET');
-      req.flush(mockUsers);
+      req.flush(mockHeroes);
     });
 
     it('should return empty when requests errors', () => {
