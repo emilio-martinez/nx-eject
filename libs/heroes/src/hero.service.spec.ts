@@ -49,7 +49,7 @@ describe('HeroService', () => {
       req.flush(mockHeroes);
     });
 
-    it('should return empty when requests errors', () => {
+    it('should return empty when requests error', () => {
       heroService.getHeroes().subscribe(res => {
         expect(res.length).toBe(0);
         expect(messageService.messages.length).toBe(1);
@@ -93,7 +93,7 @@ describe('HeroService', () => {
       req.flush([]);
     });
 
-    it('should return undefined when requests errors', () => {
+    it('should return undefined when requests error', () => {
       heroService.getHeroNo404(mockId).subscribe(res => {
         expect(res).toBe(undefined);
         expect(messageService.messages.length).toBe(1);
@@ -165,7 +165,7 @@ describe('HeroService', () => {
       req.flush(mockHeroes);
     });
 
-    it('should return empty when requests errors', () => {
+    it('should return empty when requests error', () => {
       const term = 'Mr.';
 
       heroService.searchHeroes(term).subscribe(res => {
@@ -196,7 +196,7 @@ describe('HeroService', () => {
       req.flush(mockHero);
     });
 
-    it('should return empty when requests errors', () => {
+    it('should return empty when requests error', () => {
       heroService.addHero(mockHero).subscribe(res => {
         expect(res).toBe(undefined);
         expect(messageService.messages.length).toBe(1);
@@ -240,7 +240,7 @@ describe('HeroService', () => {
       req.flush(mockHero);
     });
 
-    it('should return empty when requests errors', () => {
+    it('should return empty when requests error', () => {
       heroService.deleteHero(mockHero).subscribe(res => {
         expect(res).toBe(undefined);
         expect(messageService.messages.length).toBe(1);
@@ -249,6 +249,36 @@ describe('HeroService', () => {
 
       const req = httpMock.expectOne(endpoint(mockHero.id));
       expect(req.request.method).toBe('DELETE');
+      expect(req.request.headers.get('Content-Type')).toBe('application/json');
+      req.flush(null, { status: 500, statusText: 'Internal Server Error' });
+    });
+  });
+
+  describe('updateHero', () => {
+    const mockHero: Hero = { id: 0, name: 'Mr. Incredible' };
+
+    it('should be able to update a hero', () => {
+      heroService.updateHero(mockHero).subscribe(res => {
+        expect(res).toEqual(mockHero);
+        expect(messageService.messages.length).toBe(1);
+        expect(messageService.messages[0].includes(`updated hero id=${res.id}`)).toBeTruthy();
+      });
+
+      const req = httpMock.expectOne(apiUrl);
+      expect(req.request.method).toBe('PUT');
+      expect(req.request.headers.get('Content-Type')).toBe('application/json');
+      req.flush(mockHero);
+    });
+
+    it('should return empty when requests error', () => {
+      heroService.updateHero(mockHero).subscribe(res => {
+        expect(res).toBe(undefined);
+        expect(messageService.messages.length).toBe(1);
+        expect(messageService.messages[0].includes('updateHero failed')).toBeTruthy();
+      });
+
+      const req = httpMock.expectOne(apiUrl);
+      expect(req.request.method).toBe('PUT');
       expect(req.request.headers.get('Content-Type')).toBe('application/json');
       req.flush(null, { status: 500, statusText: 'Internal Server Error' });
     });
