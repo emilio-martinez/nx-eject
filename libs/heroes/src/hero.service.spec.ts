@@ -209,4 +209,48 @@ describe('HeroService', () => {
       req.flush(null, { status: 500, statusText: 'Internal Server Error' });
     });
   });
+
+  describe('deleteHero', () => {
+    const endpoint = (id: number) => `${apiUrl}/${id}`;
+    const mockHero: Hero = { id: 0, name: 'Mr. Incredible' };
+
+    it('should be able to delete a hero by object', () => {
+      heroService.deleteHero(mockHero).subscribe(res => {
+        expect(res).toEqual(mockHero);
+        expect(messageService.messages.length).toBe(1);
+        expect(messageService.messages[0].includes(`deleted hero id=${res.id}`)).toBeTruthy();
+      });
+
+      const req = httpMock.expectOne(endpoint(mockHero.id));
+      expect(req.request.method).toBe('DELETE');
+      expect(req.request.headers.get('Content-Type')).toBe('application/json');
+      req.flush(mockHero);
+    });
+
+    it('should be able to delete a hero by id', () => {
+      heroService.deleteHero(mockHero.id).subscribe(res => {
+        expect(res).toEqual(mockHero);
+        expect(messageService.messages.length).toBe(1);
+        expect(messageService.messages[0].includes(`deleted hero id=${res.id}`)).toBeTruthy();
+      });
+
+      const req = httpMock.expectOne(endpoint(mockHero.id));
+      expect(req.request.method).toBe('DELETE');
+      expect(req.request.headers.get('Content-Type')).toBe('application/json');
+      req.flush(mockHero);
+    });
+
+    it('should return empty when requests errors', () => {
+      heroService.deleteHero(mockHero).subscribe(res => {
+        expect(res).toBe(undefined);
+        expect(messageService.messages.length).toBe(1);
+        expect(messageService.messages[0].includes('deleteHero failed')).toBeTruthy();
+      });
+
+      const req = httpMock.expectOne(endpoint(mockHero.id));
+      expect(req.request.method).toBe('DELETE');
+      expect(req.request.headers.get('Content-Type')).toBe('application/json');
+      req.flush(null, { status: 500, statusText: 'Internal Server Error' });
+    });
+  });
 });
