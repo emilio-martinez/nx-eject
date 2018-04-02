@@ -66,18 +66,6 @@ describe('HeroService', () => {
     const mockId = 999;
     const endpoint = (id: number) => `${apiUrl}/?id=${id}`;
 
-    it('should return undefined when no id is found', () => {
-      heroService.getHeroNo404(mockId).subscribe(res => {
-        expect(res).toEqual(undefined);
-        expect(messageService.messages.length).toBe(1);
-        expect(messageService.messages[0].includes(`did not find hero id=${mockId}`)).toBeTruthy();
-      });
-
-      const req = httpMock.expectOne(endpoint(mockId));
-      expect(req.request.method).toBe('GET');
-      req.flush([]);
-    });
-
     it('should return a single hero for a matching id', () => {
       const mockHeroes: Hero[] = [{ id: mockId, name: 'Mr. Incredible' }, { id: mockId, name: 'Mr. Potato Head' }];
 
@@ -93,6 +81,18 @@ describe('HeroService', () => {
       req.flush(mockHeroes);
     });
 
+    it('should return undefined when no id is found', () => {
+      heroService.getHeroNo404(mockId).subscribe(res => {
+        expect(res).toEqual(undefined);
+        expect(messageService.messages.length).toBe(1);
+        expect(messageService.messages[0].includes(`did not find hero id=${mockId}`)).toBeTruthy();
+      });
+
+      const req = httpMock.expectOne(endpoint(mockId));
+      expect(req.request.method).toBe('GET');
+      req.flush([]);
+    });
+
     it('should return undefined when requests errors', () => {
       heroService.getHeroNo404(mockId).subscribe(res => {
         expect(res).toBe(undefined);
@@ -103,6 +103,38 @@ describe('HeroService', () => {
       const req = httpMock.expectOne(endpoint(mockId));
       expect(req.request.method).toBe('GET');
       req.flush(null, { status: 400, statusText: 'Error' });
+    });
+  });
+
+  describe('getHero', () => {
+    const mockId = 999;
+    const endpoint = (id: number) => `${apiUrl}/${id}`;
+
+    it('should return a single hero for a matching id', () => {
+      const mockHero: Hero = { id: mockId, name: 'Mr. Incredible' };
+
+      heroService.getHero(mockId).subscribe(res => {
+        expect(typeof res).toBe('object');
+        expect(res).toEqual(mockHero);
+        expect(messageService.messages.length).toBe(1);
+        expect(messageService.messages[0].includes(`fetched hero id=${mockId}`)).toBeTruthy();
+      });
+
+      const req = httpMock.expectOne(endpoint(mockId));
+      expect(req.request.method).toBe('GET');
+      req.flush(mockHero);
+    });
+
+    it('should return a 404 when no id is found', () => {
+      heroService.getHero(mockId).subscribe(res => {
+        expect(res).toEqual(undefined);
+        expect(messageService.messages.length).toBe(1);
+        expect(messageService.messages[0].includes(`getHero id=${mockId}`)).toBeTruthy();
+      });
+
+      const req = httpMock.expectOne(endpoint(mockId));
+      expect(req.request.method).toBe('GET');
+      req.flush(null, { status: 404, statusText: 'Not Found' });
     });
   });
 
