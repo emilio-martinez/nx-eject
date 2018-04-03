@@ -14,7 +14,6 @@ import { By } from '@angular/platform-browser';
 
 class MockHeroService implements Partial<HeroService> {
   private heroes: Hero[] = [{ id: 0, name: 'Mr. Incredible' }, { id: 1, name: 'Mr. Potato Head' }];
-  private nextId = this.heroes.reduce((maxId, hero) => Math.max(maxId, hero.id), 0) + 1;
 
   getHero(id: number): Observable<Hero> {
     return observableOf(this.heroes.filter(h => h.id === id)[0]);
