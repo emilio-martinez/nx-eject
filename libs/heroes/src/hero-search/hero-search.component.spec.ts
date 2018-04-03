@@ -12,7 +12,6 @@ import { Hero } from '../hero';
 
 class MockHeroService implements Partial<HeroService> {
   private heroes: Hero[] = [{ id: 0, name: 'Mr. Incredible' }, { id: 1, name: 'Mr. Potato Head' }];
-  private nextId = this.heroes.reduce((maxId, hero) => Math.max(maxId, hero.id), 0) + 1;
 
   searchHeroes(term: string): Observable<Hero[]> {
     return !term.trim() ? observableOf([]) : observableOf(this.heroes.filter(h => h.name.includes(term)));
