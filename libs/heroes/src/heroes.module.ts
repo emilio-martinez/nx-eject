@@ -20,4 +20,6 @@ import { HeroService } from './hero.service';
 })
 export class HeroesModule {}
 
-export const HeroesMockApiModule = HttpClientInMemoryWebApiModule.forRoot(HeroMockDataService, { dataEncapsulation: false });
+export const HeroesMockApiModule = HttpClientInMemoryWebApiModule.forRoot(HeroMockDataService, {
+  dataEncapsulation: false
+});
