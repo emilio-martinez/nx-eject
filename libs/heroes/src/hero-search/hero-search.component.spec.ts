@@ -15,9 +15,7 @@ class MockHeroService implements Partial<HeroService> {
   private nextId = this.heroes.reduce((maxId, hero) => Math.max(maxId, hero.id), 0) + 1;
 
   searchHeroes(term: string): Observable<Hero[]> {
-    return !term.trim()
-      ? observableOf([])
-      : observableOf(this.heroes.filter(h => h.name.includes(term)));
+    return !term.trim() ? observableOf([]) : observableOf(this.heroes.filter(h => h.name.includes(term)));
   }
 }
 
@@ -49,45 +47,51 @@ describe('HeroSearchComponent', () => {
       component.search('Potato');
     });
 
-    it('should debounce the search terms provided', fakeAsync(() => {
-      let results = null;
+    it(
+      'should debounce the search terms provided',
+      fakeAsync(() => {
+        let results = null;
 
-      component.heroes$.subscribe(res => results = res);
-      component.search('Potato');
+        component.heroes$.subscribe(res => (results = res));
+        component.search('Potato');
 
-      tick(299);
-      expect(results).toEqual(null);
+        tick(299);
+        expect(results).toEqual(null);
 
-      tick(1);
-      expect(results.length).toBe(1);
-      expect(results[0].name).toBe('Mr. Potato Head');
-    }));
+        tick(1);
+        expect(results.length).toBe(1);
+        expect(results[0].name).toBe('Mr. Potato Head');
+      })
+    );
 
-    it('should ignore terms if same as previous term', fakeAsync(() => {
-      let results = null;
+    it(
+      'should ignore terms if same as previous term',
+      fakeAsync(() => {
+        let results = null;
 
-      component.heroes$.subscribe(res => results = res);
+        component.heroes$.subscribe(res => (results = res));
 
-      component.search('Incredible');
-      tick(300);
-      expect(results.length).toBe(1);
-      expect(results[0].name).toBe('Mr. Incredible');
+        component.search('Incredible');
+        tick(300);
+        expect(results.length).toBe(1);
+        expect(results[0].name).toBe('Mr. Incredible');
 
-      component.search('Potato');
-      tick(300);
-      expect(results.length).toBe(1);
-      expect(results[0].name).toBe('Mr. Potato Head');
+        component.search('Potato');
+        tick(300);
+        expect(results.length).toBe(1);
+        expect(results[0].name).toBe('Mr. Potato Head');
 
-      component.search('Potato');
-      tick(300);
-      expect(results.length).toBe(1);
-      expect(results[0].name).toBe('Mr. Potato Head');
+        component.search('Potato');
+        tick(300);
+        expect(results.length).toBe(1);
+        expect(results[0].name).toBe('Mr. Potato Head');
 
-      component.search('Incredible');
-      tick(300);
-      expect(results.length).toBe(1);
-      expect(results[0].name).toBe('Mr. Incredible');
-    }));
+        component.search('Incredible');
+        tick(300);
+        expect(results.length).toBe(1);
+        expect(results[0].name).toBe('Mr. Incredible');
+      })
+    );
   });
 
   describe('integration', () => {
@@ -118,61 +122,70 @@ describe('HeroSearchComponent', () => {
       fixture.detectChanges();
     });
 
-    it('should list-out searched hero matches', fakeAsync(() => {
-      let heroLinksDe = getHeroLinksDe();
-      expect(heroLinksDe.length).toBe(0);
+    it(
+      'should list-out searched hero matches',
+      fakeAsync(() => {
+        let heroLinksDe = getHeroLinksDe();
+        expect(heroLinksDe.length).toBe(0);
 
-      input.value = 'Mr.';
-      inputDe.triggerEventHandler('keyup', null);
-      tick(300);
-      fixture.detectChanges();
+        input.value = 'Mr.';
+        inputDe.triggerEventHandler('keyup', null);
+        tick(300);
+        fixture.detectChanges();
 
-      heroLinksDe = getHeroLinksDe();
-      expect(heroLinksDe.length).toBe(2);
-      expect(heroLinksDe[0].nativeElement.textContent.trim()).toBe('Mr. Incredible');
-      expect(heroLinksDe[1].nativeElement.textContent.trim()).toBe('Mr. Potato Head');
+        heroLinksDe = getHeroLinksDe();
+        expect(heroLinksDe.length).toBe(2);
+        expect(heroLinksDe[0].nativeElement.textContent.trim()).toBe('Mr. Incredible');
+        expect(heroLinksDe[1].nativeElement.textContent.trim()).toBe('Mr. Potato Head');
 
-      input.value = 'Potato';
-      inputDe.triggerEventHandler('keyup', null);
-      tick(300);
-      fixture.detectChanges();
+        input.value = 'Potato';
+        inputDe.triggerEventHandler('keyup', null);
+        tick(300);
+        fixture.detectChanges();
 
-      heroLinksDe = getHeroLinksDe();
-      expect(heroLinksDe.length).toBe(1);
-      expect(heroLinksDe[0].nativeElement.textContent.trim()).toBe('Mr. Potato Head');
-    }));
+        heroLinksDe = getHeroLinksDe();
+        expect(heroLinksDe.length).toBe(1);
+        expect(heroLinksDe[0].nativeElement.textContent.trim()).toBe('Mr. Potato Head');
+      })
+    );
 
-    it('should debounce the search action', fakeAsync(() => {
-      input.value = 'Mr.';
-      inputDe.triggerEventHandler('keyup', null);
-      tick(299);
-      fixture.detectChanges();
+    it(
+      'should debounce the search action',
+      fakeAsync(() => {
+        input.value = 'Mr.';
+        inputDe.triggerEventHandler('keyup', null);
+        tick(299);
+        fixture.detectChanges();
 
-      let heroLinksDe = getHeroLinksDe();
-      expect(heroLinksDe.length).toBe(0);
+        let heroLinksDe = getHeroLinksDe();
+        expect(heroLinksDe.length).toBe(0);
 
-      tick(1);
-      fixture.detectChanges();
+        tick(1);
+        fixture.detectChanges();
 
-      heroLinksDe = getHeroLinksDe();
-      expect(heroLinksDe.length).toBe(2);
-      expect(heroLinksDe[0].nativeElement.textContent.trim()).toBe('Mr. Incredible');
-      expect(heroLinksDe[1].nativeElement.textContent.trim()).toBe('Mr. Potato Head');
-    }));
+        heroLinksDe = getHeroLinksDe();
+        expect(heroLinksDe.length).toBe(2);
+        expect(heroLinksDe[0].nativeElement.textContent.trim()).toBe('Mr. Incredible');
+        expect(heroLinksDe[1].nativeElement.textContent.trim()).toBe('Mr. Potato Head');
+      })
+    );
 
-    it('should contain router links for each hero', fakeAsync(() => {
-      input.value = 'Mr.';
-      inputDe.triggerEventHandler('keyup', null);
-      tick(300);
-      fixture.detectChanges();
+    it(
+      'should contain router links for each hero',
+      fakeAsync(() => {
+        input.value = 'Mr.';
+        inputDe.triggerEventHandler('keyup', null);
+        tick(300);
+        fixture.detectChanges();
 
-      const routerLinks = componentDe
-        .queryAll(By.directive(RouterLinkWithHref))
-        .map(de => de.injector.get(RouterLinkWithHref));
+        const routerLinks = componentDe
+          .queryAll(By.directive(RouterLinkWithHref))
+          .map(de => de.injector.get(RouterLinkWithHref));
 
-      expect(routerLinks.length).toBe(2);
-      expect(routerLinks[0].href).toBe('/detail/0');
-      expect(routerLinks[1].href).toBe('/detail/1');
-    }));
+        expect(routerLinks.length).toBe(2);
+        expect(routerLinks[0].href).toBe('/detail/0');
+        expect(routerLinks[1].href).toBe('/detail/1');
+      })
+    );
   });
 });
