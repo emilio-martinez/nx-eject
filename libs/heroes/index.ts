@@ -1,1 +1,1 @@
-export { HeroesModule } from './src/heroes.module';
+export { HeroesModule, HeroesMockApiModule } from './src/heroes.module';

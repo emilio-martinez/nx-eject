@@ -18,18 +18,6 @@ import { HeroService } from './hero.service';
   exports: [MessagesModule, HeroesRoutingModule],
   providers: [HeroService]
 })
-export class HeroesModule {
-  static withMockData(): ModuleWithProviders {
-    return {
-      // tslint:disable-next-line no-use-before-declare
-      ngModule: HeroesMockModule,
-      providers: []
-    };
-  }
-}
+export class HeroesModule {}
 
-@NgModule({
-  imports: [HeroesModule, HttpClientInMemoryWebApiModule.forRoot(HeroMockDataService, { dataEncapsulation: false })],
-  exports: [HeroesModule]
-})
-export class HeroesMockModule {}
+export const HeroesMockApiModule = HttpClientInMemoryWebApiModule.forRoot(HeroMockDataService, { dataEncapsulation: false });
