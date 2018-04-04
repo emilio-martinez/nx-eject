@@ -3,7 +3,7 @@
   "project": {
     "name": "myprojectname",
     "npmScope": "myprojectname",
-    "latestMigration": "20180313-add-tags"
+    "latestMigration": "20180328-add-nx-lint"
   },
   "apps": [
     {
