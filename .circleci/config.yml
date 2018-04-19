@@ -1,5 +1,5 @@
 var_docker_image: &var_docker_image popcornpool/chrome-node-yarn
-var_dependency_cache_key: &var_dependency_cache_key dependency-cache-{{ checksum "yarn.lock" }}
+var_dependency_cache_key: &var_dependency_cache_key dependency-cache-{{ checksum "yarn.lock" }}-1.0
 var_dependency_cache_path: &var_dependency_cache_path ~/.cache/yarn
 
 # After checkout, rebase on top of master.
