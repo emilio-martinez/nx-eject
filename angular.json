@@ -1,0 +1,198 @@
+{
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "version": 1,
+  "newProjectRoot": "",
+  "projects": {
+    "tour-of-heroes": {
+      "root": "apps/tour-of-heroes",
+      "sourceRoot": "apps/tour-of-heroes/src",
+      "projectType": "application",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/apps/tour-of-heroes",
+            "index": "apps/tour-of-heroes/src/index.html",
+            "main": "apps/tour-of-heroes/src/main.ts",
+            "tsConfig": "apps/tour-of-heroes/tsconfig.app.json",
+            "polyfills": "apps/tour-of-heroes/src/polyfills.ts",
+            "assets": [
+              "apps/tour-of-heroes/src/assets",
+              "apps/tour-of-heroes/src/favicon.ico"
+            ],
+            "styles": [
+              "apps/tour-of-heroes/src/styles.css"
+            ],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "fileReplacements": [
+                {
+                  "replace": "apps/tour-of-heroes/src/environments/environment.ts",
+                  "with": "apps/tour-of-heroes/src/environments/environment.prod.ts"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "tour-of-heroes:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "tour-of-heroes:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "tour-of-heroes:build"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "apps/tour-of-heroes/src/test.ts",
+            "karmaConfig": "apps/tour-of-heroes/karma.conf.js",
+            "polyfills": "apps/tour-of-heroes/src/polyfills.ts",
+            "tsConfig": "apps/tour-of-heroes/tsconfig.spec.json",
+            "scripts": [],
+            "styles": [
+              "apps/tour-of-heroes/src/styles.css"
+            ],
+            "assets": [
+              "apps/tour-of-heroes/src/assets",
+              "apps/tour-of-heroes/src/favicon.ico"
+            ]
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "format": "verbose",
+            "typeCheck": true,
+            "tsConfig": [
+              "apps/tour-of-heroes/tsconfig.app.json",
+              "apps/tour-of-heroes/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      },
+      "prefix": "app"
+    },
+    "tour-of-heroes-e2e": {
+      "root": "apps/tour-of-heroes-e2e",
+      "sourceRoot": "apps/tour-of-heroes-e2e/src",
+      "projectType": "application",
+      "architect": {
+        "e2e": {
+          "builder": "@angular-devkit/build-angular:protractor",
+          "options": {
+            "protractorConfig": "apps/tour-of-heroes-e2e/protractor.conf.js",
+            "devServerTarget": "tour-of-heroes:serve"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "format": "verbose",
+            "typeCheck": true,
+            "tsConfig": [
+              "apps/tour-of-heroes-e2e/tsconfig.e2e.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      },
+      "prefix": "app"
+    },
+    "heroes": {
+      "root": "libs/heroes",
+      "sourceRoot": "libs/heroes/src",
+      "projectType": "library",
+      "architect": {
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "libs/heroes/src/test.ts",
+            "karmaConfig": "libs/heroes/karma.conf.js",
+            "scripts": [],
+            "styles": [],
+            "assets": [],
+            "tsConfig": "libs/heroes/tsconfig.spec.json"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "format": "verbose",
+            "typeCheck": true,
+            "tsConfig": [
+              "libs/heroes/tsconfig.lib.json",
+              "libs/heroes/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      },
+      "prefix": "app"
+    },
+    "messages": {
+      "root": "libs/messages",
+      "sourceRoot": "libs/messages/src",
+      "projectType": "library",
+      "architect": {
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "libs/messages/src/test.ts",
+            "karmaConfig": "libs/messages/karma.conf.js",
+            "scripts": [],
+            "styles": [],
+            "assets": [],
+            "tsConfig": "libs/messages/tsconfig.spec.json"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "format": "verbose",
+            "typeCheck": true,
+            "tsConfig": [
+              "libs/messages/tsconfig.lib.json",
+              "libs/messages/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      },
+      "prefix": "app"
+    }
+  },
+  "defaultProject": "tour-of-heroes",
+  "cli": {
+    "defaultCollection": "@nrwl/schematics"
+  }
+}

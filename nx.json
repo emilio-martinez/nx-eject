@@ -1,0 +1,17 @@
+{
+  "npmScope": "myprojectname",
+  "projects": {
+    "tour-of-heroes": {
+      "tags": []
+    },
+    "tour-of-heroes-e2e": {
+      "tags": []
+    },
+    "heroes": {
+      "tags": []
+    },
+    "messages": {
+      "tags": []
+    }
+  }
+}

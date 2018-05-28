@@ -43,7 +43,7 @@ jobs:
           command: npm run format:check
       - run:
           name: Lint
-          command: npm run lint -- --format verbose --type-check
+          command: npm run lint
   build:
     <<: *anchor_job_common
     steps:
@@ -59,7 +59,7 @@ jobs:
             - *var_dependency_cache_path
       - run:
           name: Build (prod)
-          command: npm run build -- --prod
+          command: npm run build
   test:
     <<: *anchor_job_common
     steps:
@@ -75,7 +75,7 @@ jobs:
             - *var_dependency_cache_path
       - run:
           name: Test
-          command:  npm run test -- --single-run
+          command:  npm run test
 
 workflows:
   version: 2
