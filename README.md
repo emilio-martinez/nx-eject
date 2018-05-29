@@ -1,6 +1,6 @@
-# Angular Tour of Heroes—([Eject](https://github.com/angular/angular-cli/wiki/eject) + [Nx](https://nrwl.io/nx))
+# Angular Tour of Heroes Tutorial + Nx
 
- This project implements the original [Tour of Heroes](https://angular.io/tutorial) tutorial but showcasing the use of [Nx](https://nrwl.io/nx). Additionally, this project will progressively move towards a viable [Angular CLI Eject](https://github.com/angular/angular-cli/wiki/eject) strategy.
+This project applies the Angular [Tour of Heroes tutorial](https://angular.io/tutorial) to an [Nx](https://nrwl.io/nx) project structure, mostly for example purposes. It shows how even small projects can benefit from organizing a codebase in this manner.
 
  ---
 
