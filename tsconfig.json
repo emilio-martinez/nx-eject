@@ -18,6 +18,12 @@
     "paths": {
       "@myprojectname/*": [
         "libs/*"
+      ],
+      "@myprojectname/heroes": [
+        "libs/heroes/src/index.ts"
+      ],
+      "@myprojectname/messages": [
+        "libs/messages/src/index.ts"
       ]
     }
   },
