@@ -1,8 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-
-import { Observable } from 'rxjs/Observable';
-import { of } from 'rxjs/observable/of';
+import { Observable, of as observableOf } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 
 import { Hero } from './hero';
@@ -50,7 +48,7 @@ export class HeroService {
   searchHeroes(term: string): Observable<Hero[]> {
     if (!term.trim()) {
       // if not search term, return empty hero array.
-      return of([]);
+      return observableOf([]);
     }
     return this.http
       .get<Hero[]>(`${this.heroesUrl}/?name=${term}`)
@@ -101,7 +99,7 @@ export class HeroService {
       this.log(`${operation} failed: ${error.message}`);
 
       // Let the app keep running by returning an empty result.
-      return of(result as T);
+      return observableOf(result as T);
     };
   }
 
