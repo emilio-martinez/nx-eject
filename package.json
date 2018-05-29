@@ -41,10 +41,9 @@
     "@ngrx/store-devtools": "6.0.1",
     "@nrwl/nx": "6.0.2",
     "classlist.js": "https://github.com/eligrey/classList.js#ecb3305730a9b62f31cfdc71190d2f312233ed32",
-    "core-js": "^2.5.4",
+    "core-js": "2.5.7",
     "ngrx-store-freeze": "0.2.3",
-    "rxjs": "6.0.0",
-    "rxjs-compat": "6.0.0",
+    "rxjs": "6.2.0",
     "zone.js": "^0.8.26"
   },
   "devDependencies": {

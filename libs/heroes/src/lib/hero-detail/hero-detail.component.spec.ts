@@ -4,8 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { FormsModule, NgModel } from '@angular/forms';
 import { DebugElement } from '@angular/core';
 import { Location } from '@angular/common';
-import { Observable } from 'rxjs/Observable';
-import { of as observableOf } from 'rxjs/observable/of';
+import { Observable, of as observableOf } from 'rxjs';
 
 import { HeroDetailComponent } from './hero-detail.component';
 import { HeroService } from '../hero.service';
