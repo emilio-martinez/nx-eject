@@ -19,6 +19,17 @@ anchor_print_versions: &anchor_print_versions
     npm --version
     yarn --version
 
+anchor_get_target_branch: &anchor_get_target_branch
+  name: Get target branch
+  command: |
+    if [[ -n ${CIRCLE_PULL_REQUEST} ]]; then
+      curl -L "https://github.com/stedolan/jq/releases/download/jq-1.5/jq-linux64" -o jq
+      chmod +x jq
+      PR_TARGET_BRANCH=`curl "https://api.github.com/repos/${CIRCLE_PROJECT_USERNAME}/${CIRCLE_PROJECT_REPONAME}/pulls/${CIRCLE_PULL_REQUEST//*pull\//}?access_token=$GITHUB_TOKEN" | ./jq '.base.ref' | tr -d '"'`
+      echo "export PR_TARGET_BRANCH=${PR_TARGET_BRANCH}" >> $BASH_ENV
+      echo "export PR_TARGET_BRANCH=${PR_TARGET_BRANCH}"
+    fi;
+
 anchor_install_deps: &anchor_install_deps
   name: Install Dependencies
   command: yarn --pure-lockfile --non-interactive
@@ -57,9 +68,14 @@ jobs:
           key: *var_dependency_cache_key
           paths:
             - *var_dependency_cache_path
+      - run: *anchor_get_target_branch
       - run:
-          name: Build (prod)
-          command: npm run build
+          name: Build
+          command: |
+            source $BASH_ENV;
+            if [[ ! -z ${PR_TARGET_BRANCH} ]]; then
+              npm run affected:build -- --head=$CIRCLE_SHA1 --base=$(git merge-base $CIRCLE_SHA1 origin/$PR_TARGET_BRANCH)
+            fi;
   test:
     <<: *anchor_job_common
     steps:
@@ -73,9 +89,14 @@ jobs:
           key: *var_dependency_cache_key
           paths:
             - *var_dependency_cache_path
+      - run: *anchor_get_target_branch
       - run:
           name: Test
-          command:  npm run test
+          command: |
+            source $BASH_ENV;
+            if [[ ! -z ${PR_TARGET_BRANCH} ]]; then
+              npm run affected:test -- --head=$CIRCLE_SHA1 --base=$(git merge-base $CIRCLE_SHA1 origin/$PR_TARGET_BRANCH)
+            fi;
 
 workflows:
   version: 2
